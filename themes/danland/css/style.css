@@ -1671,6 +1671,7 @@ ul.primary li a {
 
 .theme-info ul {
 	list-style-image:none;
+<<<<<<< HEAD
 }
 
 
@@ -1898,3 +1899,6 @@ ul.primary li a {
 		float: none;
 	}
 }
+=======
+}
+>>>>>>> fa3a38ce0c433afd3ee0881011a34284c0b6c5e5
