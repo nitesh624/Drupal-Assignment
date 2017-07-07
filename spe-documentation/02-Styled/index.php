@@ -2,10 +2,10 @@
 // index.php 20150101 - 20170302
 // Copyright (C) 2015-2017 Mark Constable <markc@renta.net> (AGPL-3.0)
 
-declare(strict_types = 1);
+declare(strict_types = 1);// strict type-checking mode is used for function calls and return statements in the the file
 
-echo new class() extends Init
-{
+echo new class() extends Init //the new class is created by extending the class "Init"
+{// In below protected access modifier the variables and arrays are declared
     protected
     $email = 'markc@renta.net',
     $in = [
@@ -28,14 +28,14 @@ echo new class() extends Init
 
 class Init
 {
-    public function __construct()
+    public function __construct()//__construct() function creates a new SimpleXMLElement object. 
     {
-        foreach ($this->in as $k => $v)
-            $this->in[$k] = isset($_REQUEST[$k])
-                ? htmlentities(trim($_REQUEST[$k])) : $v;
+        foreach ($this->in as $k => $v) // this foreach loop cycles through each entry in the array named "in" and stored the values as "key=>value" pair in $k and $v respectively
+            $this->in[$k] = isset($_REQUEST[$k])// isset() function is checking if the value of variable $k is set or not
+                ? htmlentities(trim($_REQUEST[$k])) : $v;//htmlentities is used to Convert all applicable characters to HTML entities
 
-        if (method_exists($this, $this->in['m']))
-            $this->out['main'] = $this->{$this->in['m']}();
+        if (method_exists($this, $this->in['m']))//the method_exist is the inbuilt PHP function which is having two parameters first is "object" and second is "method" . It returns true if the object is found in the method
+            $this->out['main'] = $this->{$this->in['m']}();//when the above if condition evaluates ti true then this statement is executes
 
         foreach ($this->out as $k => $v)
             $this->out[$k] = method_exists($this, $k) ? $this->$k() : $v;
@@ -46,7 +46,7 @@ class Init
         return $this->html();
     }
 
-    private function css() : string
+    private function css() : string // This css() function is having string return type and when it is called it return the below defined styles 
     {
         return '
     <link href="//fonts.googleapis.com/css?family=Roboto:100,300,400,500,300italic" rel="stylesheet" type="text/css">
@@ -102,7 +102,7 @@ a.active:hover { background-color: #2295f8; }
         </style>';
     }
 
-    private function nav1() : string
+    private function nav1() : string // nav1() function is having string return type and when this function is called then the navigation menu is generated having the "url" and text to be shown for link is defined as below
     {
         $m = '?m='.$this->in['m'];
         return '
@@ -114,7 +114,7 @@ a.active:hover { background-color: #2295f8; }
       </nav>';
     }
 
-    private function head() : string
+    private function head() : string // head() function is having string return type and when it is called it returns the text to be shown inside the header tag of rendering web page . The value is coming from out array which is having the key "head" which is "Styled" in this case.
     {
         return '
     <header>
@@ -122,14 +122,14 @@ a.active:hover { background-color: #2295f8; }
     </header>';
     }
 
-    private function main() : string
+    private function main() : string// main() function is having string as return type and it returns the contents which should be placed inside <main>....</main> tag. The value is coming from out array which is having the key "main" which is "<p>Error: missing page!</p>" in this case.
     {
         return '
     <main>' . $this->out['main'] . '
     </main>';
     }
 
-    private function foot() : string
+    private function foot() : string// foot() function is having return type string and it returns the string to be displayed inside  <footer> tag. The value is coming from out array which is having the key "foot" which is "Copyright (C) 2015-2017 Mark Constable (AGPL-3.0)" in this case.
     {
         return '
     <footer>
@@ -137,7 +137,7 @@ a.active:hover { background-color: #2295f8; }
     </footer>';
     }
 
-    private function html() : string
+    private function html() : string //html() function is having string return type string and it returns the html code is string 
     {
         extract($this->out, EXTR_SKIP);
         return '<!DOCTYPE html>
@@ -153,7 +153,7 @@ a.active:hover { background-color: #2295f8; }
 ';
     }
 
-    private function home() : string
+    private function home() : string //when home() function is called it returns the link defined under the "array_merge()" to the nav1 menu
     {
         $this->nav1 = array_merge($this->nav1, [
             ['Project Page', 'https://github.com/markc/spe/tree/master/02-Styled'],
@@ -167,7 +167,7 @@ Comments and pull requests are most welcome via the Issue Tracker link above.
       </p>';
     }
 
-    private function about() : string
+    private function about() : string //when about() is called it returns the string type which is written under the "return" statement.
     {
         return '
       <h2>About</h2>
@@ -178,7 +178,7 @@ design and some of the new features of PHP7.
       </p>';
     }
 
-    private function contact() : string
+    private function contact() : string //when contact() is called it create the contact form for submisssion of messages
     {
         return '
       <h2>Email Contact Form</h2>
